@@ -34,7 +34,7 @@ Or you can pass an array:
 
 You can also write several rows at once:
 
-    $writer->writeFromArray(
-        'value1, value2, value3',
-        array('value1', 'value2', 'value3')
-    );
+    $writer->writeFromArray(array(
+            'value1, value2, value3',
+            array('value1', 'value2', 'value3')
+    ));
