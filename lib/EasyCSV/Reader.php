@@ -41,4 +41,14 @@ class Reader extends AbstractBase
     {
         return $this->_line;
     }
+
+    public function setDelimiter($delimiter)
+    {
+        $this->_delimiter = $delimiter;
+    }
+
+    public function setEnclosure($enclosure)
+    {
+        $this->_enclosure = $enclosure;
+    }
 }
