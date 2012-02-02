@@ -8,7 +8,7 @@ class Reader extends AbstractBase
     private $_line;
     private $_skipBlanks;
 
-    public function __construct($path, $mode = 'r+', $skipBlanks = true)
+    public function __construct($path, $mode = 'r+', $skipBlanks = false)
     {
         parent::__construct($path, $mode);
         $this->_skipBlanks = $skipBlanks;
