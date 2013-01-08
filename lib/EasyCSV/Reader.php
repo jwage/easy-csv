@@ -4,17 +4,16 @@ namespace EasyCSV;
 
 class Reader extends AbstractBase
 {
-	private
-		$headers_in_first_row = true;
+    private $_headersInFirstRow = true;
 
     private $_headers;
     private $_line;
 
-    public function __construct($path, $mode = 'r+', $headers_in_first_row=true)
+    public function __construct($path, $mode = 'r+', $headersInFirstRow = true)
     {
         parent::__construct($path, $mode);
-		$this->headers_in_first_row = $headers_in_first_row;
-        $this->_headers = ($this->headers_in_first_row === true)?$this->getRow():false;
+	$this->_headersInFirstRow = $headersInFirstRow;
+        $this->_headers = $this->_headersInFirstRow === true ? $this->getRow() : false;
         $this->_line    = 0;
     }
 
