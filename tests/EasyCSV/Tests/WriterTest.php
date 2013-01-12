@@ -4,22 +4,22 @@ namespace EasyCSV\Tests;
 
 class WriterTest extends \PHPUnit_Framework_TestCase
 {
-    private $_writer;
+    private $writer;
 
     public function setUp()
     {
-        $this->_writer = new \EasyCSV\Writer(__DIR__ . '/write.csv');
+        $this->writer = new \EasyCSV\Writer(__DIR__ . '/write.csv');
     }
 
     public function testWriteRow()
     {
-        $this->_writer->writeRow('test1, test2, test3');
+        $this->writer->writeRow('test1, test2, test3');
     }
 
     public function testWriteFromArray()
     {
-        $this->_writer->writeRow('column1, column2, column3');
-        $this->_writer->writeFromArray(array(
+        $this->writer->writeRow('column1, column2, column3');
+        $this->writer->writeFromArray(array(
             '1test1, 1test2ing this out, 1test3',
             array('2test1', '2test2 ing this out ok', '2test3')
         ));
