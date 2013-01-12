@@ -10,7 +10,7 @@ class Writer extends AbstractBase
             $row = explode(',', $row);
             $row = array_map('trim', $row);
         }
-        return fputcsv($this->_handle, $row, $this->_delimiter, $this->_enclosure);
+        return fputcsv($this->handle, $row, $this->delimiter, $this->enclosure);
     }
 
     public function writeFromArray(array $array)

@@ -4,22 +4,32 @@ namespace EasyCSV;
 
 abstract class AbstractBase
 {
-    protected $_handle;
-    protected $_delimiter = ',';
-    protected $_enclosure = '"';
+    protected $handle;
+    protected $delimiter = ',';
+    protected $enclosure = '"';
 
     public function __construct($path, $mode = 'r+')
     {
         if ( ! file_exists($path)) {
             touch($path);
         }
-        $this->_handle = fopen($path, $mode);
+        $this->handle = fopen($path, $mode);
     }
 
     public function __destruct()
     {
-        if (is_resource($this->_handle)) {
-            fclose($this->_handle);
+        if (is_resource($this->handle)) {
+            fclose($this->handle);
         }
+    }
+
+    public function setDelimiter($delimiter)
+    {
+        $this->delimiter = $delimiter;
+    }
+
+    public function setEnclosure($enclosure)
+    {
+        $this->enclosure = $enclosure;
     }
 }

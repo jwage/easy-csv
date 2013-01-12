@@ -4,24 +4,23 @@ namespace EasyCSV;
 
 class Reader extends AbstractBase
 {
-    private $_headersInFirstRow = true;
-
-    private $_headers;
-    private $_line;
+    private $headersInFirstRow = true;
+    private $headers;
+    private $line;
 
     public function __construct($path, $mode = 'r+', $headersInFirstRow = true)
     {
         parent::__construct($path, $mode);
-        $this->_headersInFirstRow = $headersInFirstRow;
-        $this->_headers = $this->_headersInFirstRow === true ? $this->getRow() : false;
-        $this->_line    = 0;
+        $this->headersInFirstRow = $headersInFirstRow;
+        $this->headers = $this->headersInFirstRow === true ? $this->getRow() : false;
+        $this->line    = 0;
     }
 
     public function getRow()
     {
-        if (($row = fgetcsv($this->_handle, 1000, $this->_delimiter, $this->_enclosure)) !== false) {
-            $this->_line++;
-            return $this->_headers ? array_combine($this->_headers, $row) : $row;
+        if (($row = fgetcsv($this->handle, 1000, $this->delimiter, $this->enclosure)) !== false) {
+            $this->line++;
+            return $this->headers ? array_combine($this->headers, $row) : $row;
         } else {
             return false;
         }
@@ -38,16 +37,6 @@ class Reader extends AbstractBase
 
     public function getLineNumber()
     {
-        return $this->_line;
-    }
-
-    public function setDelimiter($delimiter)
-    {
-        $this->_delimiter = $delimiter;
-    }
-
-    public function setEnclosure($enclosure)
-    {
-        $this->_enclosure = $enclosure;
+        return $this->line;
     }
 }
