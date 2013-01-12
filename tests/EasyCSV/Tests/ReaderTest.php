@@ -2,8 +2,6 @@
 
 namespace EasyCSV\Tests;
 
-require_once __DIR__ . '/TestInit.php';
-
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     private $_reader;

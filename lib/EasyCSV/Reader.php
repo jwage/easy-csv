@@ -12,7 +12,7 @@ class Reader extends AbstractBase
     public function __construct($path, $mode = 'r+', $headersInFirstRow = true)
     {
         parent::__construct($path, $mode);
-	$this->_headersInFirstRow = $headersInFirstRow;
+        $this->_headersInFirstRow = $headersInFirstRow;
         $this->_headers = $this->_headersInFirstRow === true ? $this->getRow() : false;
         $this->_line    = 0;
     }
