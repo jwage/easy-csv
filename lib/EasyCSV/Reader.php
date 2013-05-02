@@ -5,15 +5,17 @@ namespace EasyCSV;
 class Reader extends AbstractBase
 {
     private $headersInFirstRow = true;
+    private $bufferSize = 1000;
     private $headers;
     private $line;
     private $init;
 
-    public function __construct($path, $mode = 'r+', $headersInFirstRow = true)
+    public function __construct($path, $mode = 'r+', $headersInFirstRow = true, $bufferSize = 1000)
     {
         parent::__construct($path, $mode);
         $this->headersInFirstRow = $headersInFirstRow;
         $this->line = 0;
+        $this->bufferSize = $bufferSize;
     }
 
     public function getHeaders()
@@ -25,7 +27,7 @@ class Reader extends AbstractBase
     public function getRow()
     {
         $this->init();
-        if (($row = fgetcsv($this->handle, 1000, $this->delimiter, $this->enclosure)) !== false) {
+        if (($row = fgetcsv($this->handle, $this->bufferSize, $this->delimiter, $this->enclosure)) !== false) {
             $this->line++;
             return $this->headers ? array_combine($this->headers, $row) : $row;
         } else {
