@@ -28,8 +28,6 @@ class Reader extends AbstractBase
     {
         $this->init();
         if (($row = fgetcsv($this->handle, $this->bufferSize, $this->delimiter, $this->enclosure)) !== false) {
-            echo "this->bufferSize={$this->bufferSize} row dump:\n";
-            print_r($row);
             $this->line++;
             return $this->headers ? array_combine($this->headers, $row) : $row;
         } else {
