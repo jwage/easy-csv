@@ -7,6 +7,7 @@ abstract class AbstractBase
     protected $handle;
     protected $delimiter = ',';
     protected $enclosure = '"';
+    protected $limit = 1000;
 
     public function __construct($path, $mode = 'r+')
     {
@@ -31,5 +32,10 @@ abstract class AbstractBase
     public function setEnclosure($enclosure)
     {
         $this->enclosure = $enclosure;
+    }
+    
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
 }
