@@ -3,7 +3,7 @@ EasyCSV
 
 EasyCSV is a simple Object Oriented CSV manipulation library for PHP 5.4+
 
-[![Build Status](https://secure.travis-ci.org/jwage/EasyCSV.png?branch=master)](http://travis-ci.org/jwage/EasyCSV)
+[![Build Status](https://secure.travis-ci.org/jwage/easy-csv.png?branch=master)](http://travis-ci.org/jwage/easy-csv)
 
 ## Reader
 
