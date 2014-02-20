@@ -32,7 +32,6 @@ print_r($reader->getAll());
 To write CSV files we need to instantiate the EasyCSV writer class:
 
 ```php
-<?php
 $writer = new \EasyCSV\Writer('write.csv');
 ```
 
