@@ -59,4 +59,9 @@ class Reader extends AbstractBase
         $this->init    = true;
         $this->headers = $this->headersInFirstRow === true ? $this->getRow() : false;
     }
+
+    protected function incrementLine()
+    {
+        $this->line++;
+    }
 }
