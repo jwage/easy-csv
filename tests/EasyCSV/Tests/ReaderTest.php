@@ -125,7 +125,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testSetHeaderLine( Reader $reader )
+    public function testSetHeaderLine(Reader $reader)
     {
         $headers = $this->headerValues;
 
@@ -139,7 +139,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testSetHeaderLineNoHeadersFirstRow( Reader $reader  ){
+    public function testSetHeaderLineNoHeadersFirstRow(Reader $reader){
         // set headers
         $reader->setHeaderLine( 3 );
 
@@ -154,7 +154,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testGetLastLineNumber( Reader $reader )
+    public function testGetLastLineNumber(Reader $reader)
     {
         $this->assertEquals( 5, $reader->getLastLineNumber() );
     }
@@ -162,7 +162,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testGetLastLineNumberNoHeadersFirstRow( Reader $reader )
+    public function testGetLastLineNumberNoHeadersFirstRow(Reader $reader)
     {
         $this->assertEquals( 10, $reader->getLastLineNumber() );
     }

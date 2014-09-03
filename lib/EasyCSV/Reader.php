@@ -2,11 +2,6 @@
 
 namespace EasyCSV;
 
-/**
- * Class Reader
- *
- * @package EasyCSV
- */
 class Reader extends AbstractBase
 {
     /**
@@ -68,12 +63,12 @@ class Reader extends AbstractBase
         }
 
         $row = $this->handle->fgetcsv($this->delimiter, $this->enclosure);
-        $isEmpty = $this->rowIsEmpty( $row );
+        $isEmpty = $this->rowIsEmpty($row);
 
-        if ($row !== false && $row != null && $isEmpty === FALSE ) {
+        if ($row !== false && $row != null && $isEmpty === false ) {
             $this->line++;
             return $this->headers ? array_combine($this->headers, $row) : $row;
-        } elseif( $isEmpty ){
+        } elseif($isEmpty){
             // empty row, transparently try the next row
             return $this->getRow();
         } else {
@@ -106,7 +101,7 @@ class Reader extends AbstractBase
      */
     public function getLastLineNumber()
     {
-        if( $this->lastLine !== FALSE ) {
+        if( $this->lastLine !== false ) {
             return $this->lastLine;
         }
 
@@ -123,13 +118,13 @@ class Reader extends AbstractBase
      */
     public function getCurrentRow()
     {
-        return str_getcsv( $this->handle->current(), $this->delimiter, $this->enclosure );
+        return str_getcsv($this->handle->current(), $this->delimiter, $this->enclosure);
     }
 
     /**
      * @param $lineNumber zero-based index
      */
-    public function advanceTo( $lineNumber )
+    public function advanceTo($lineNumber)
     {
         if( $this->headerLine > $lineNumber){
             throw new \LogicException("Line Number $lineNumber is before the header line that was set");
@@ -139,13 +134,13 @@ class Reader extends AbstractBase
 
         $this->line = $lineNumber;
 
-        $this->handle->seek( $lineNumber );
+        $this->handle->seek($lineNumber);
     }
 
     /**
      * @param $lineNumber zero-based index
      */
-    public function setHeaderLine( $lineNumber )
+    public function setHeaderLine($lineNumber)
     {
         if( $lineNumber !== 0 ) {
             $this->headersInFirstRow = false;
@@ -156,7 +151,7 @@ class Reader extends AbstractBase
         $this->headerLine = $lineNumber;
 
         // seek to line before headers
-        $this->handle->seek( $lineNumber );
+        $this->handle->seek($lineNumber);
 
         // get headers
         $this->headers = $this->getCurrentRow();
@@ -180,17 +175,17 @@ class Reader extends AbstractBase
      * @param $row
      * @return bool
      */
-    protected function rowIsEmpty( $row )
+    protected function rowIsEmpty($row)
     {
-        $emptyRow = ( $row === array( NULL ) );
-        $emptyRowWithDelimiters = ( array_filter( $row ) === array() );
-        $isEmpty = FALSE;
+        $emptyRow = ( $row === array(NULL) );
+        $emptyRowWithDelimiters = ( array_filter($row) === array() );
+        $isEmpty = false;
 
-        if ( $emptyRow ) {
-            $isEmpty = TRUE;
+        if ($emptyRow) {
+            $isEmpty = true;
             return $isEmpty;
-        } elseif ( $emptyRowWithDelimiters ) {
-            $isEmpty = TRUE;
+        } elseif ($emptyRowWithDelimiters) {
+            $isEmpty = true;
             return $isEmpty;
         }
 
