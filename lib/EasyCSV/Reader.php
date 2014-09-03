@@ -34,7 +34,7 @@ class Reader extends AbstractBase
     /**
      * @param $path
      * @param string $mode
-     * @param bool $headersInFirstRow
+     * @param bool   $headersInFirstRow
      */
     public function __construct($path, $mode = 'r+', $headersInFirstRow = true)
     {
@@ -49,6 +49,7 @@ class Reader extends AbstractBase
     public function getHeaders()
     {
         $this->init();
+
         return $this->headers;
     }
 
@@ -65,10 +66,11 @@ class Reader extends AbstractBase
         $row = $this->handle->fgetcsv($this->delimiter, $this->enclosure);
         $isEmpty = $this->rowIsEmpty($row);
 
-        if ($row !== false && $row != null && $isEmpty === false ) {
+        if ($row !== false && $row != null && $isEmpty === false) {
             $this->line++;
+
             return $this->headers ? array_combine($this->headers, $row) : $row;
-        } elseif($isEmpty){
+        } elseif ($isEmpty) {
             // empty row, transparently try the next row
             return $this->getRow();
         } else {
@@ -85,6 +87,7 @@ class Reader extends AbstractBase
         while ($row = $this->getRow()) {
             $data[] = $row;
         }
+
         return $data;
     }
 
@@ -101,7 +104,7 @@ class Reader extends AbstractBase
      */
     public function getLastLineNumber()
     {
-        if( $this->lastLine !== false ) {
+        if ($this->lastLine !== false) {
             return $this->lastLine;
         }
 
@@ -126,9 +129,9 @@ class Reader extends AbstractBase
      */
     public function advanceTo($lineNumber)
     {
-        if( $this->headerLine > $lineNumber){
+        if ($this->headerLine > $lineNumber) {
             throw new \LogicException("Line Number $lineNumber is before the header line that was set");
-        } elseif( $this->headerLine === $lineNumber ){
+        } elseif ($this->headerLine === $lineNumber) {
             throw new \LogicException("Line Number $lineNumber is equal to the header line that was set");
         }
 
@@ -142,7 +145,7 @@ class Reader extends AbstractBase
      */
     public function setHeaderLine($lineNumber)
     {
-        if( $lineNumber !== 0 ) {
+        if ($lineNumber !== 0) {
             $this->headersInFirstRow = false;
         } else {
             return false;
@@ -164,7 +167,7 @@ class Reader extends AbstractBase
         }
         $this->init = true;
 
-        if( $this->headersInFirstRow === true) {
+        if ($this->headersInFirstRow === true) {
             $this->handle->rewind();
 
             $this->headers = $this->getRow();
@@ -177,15 +180,17 @@ class Reader extends AbstractBase
      */
     protected function rowIsEmpty($row)
     {
-        $emptyRow = ( $row === array(NULL) );
-        $emptyRowWithDelimiters = ( array_filter($row) === array() );
+        $emptyRow = ($row === array(null));
+        $emptyRowWithDelimiters = (array_filter($row) === array());
         $isEmpty = false;
 
         if ($emptyRow) {
             $isEmpty = true;
+
             return $isEmpty;
         } elseif ($emptyRowWithDelimiters) {
             $isEmpty = true;
+
             return $isEmpty;
         }
 
