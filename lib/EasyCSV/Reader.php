@@ -9,7 +9,7 @@ class Reader extends AbstractBase
      */
     private $headersInFirstRow = true;
     /**
-     * @var bool
+     * @var array|bool
      */
     private $headers = false;
     /**
