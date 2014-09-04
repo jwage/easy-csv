@@ -45,7 +45,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOneAtAtime(Reader $reader)
     {
-        while($row = $reader->getRow()) {
+        while ($row = $reader->getRow()) {
             $this->assertTrue(is_array($row));
             $this->assertEquals(3, count($row));
         }
@@ -66,7 +66,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals( $this->headerValues, $reader->getHeaders());
     }
-    
+
     /**
      * @dataProvider getReaders
      */
@@ -139,7 +139,8 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testSetHeaderLineNoHeadersFirstRow(Reader $reader){
+    public function testSetHeaderLineNoHeadersFirstRow(Reader $reader)
+    {
         // set headers
         $reader->setHeaderLine( 3 );
 
@@ -171,6 +172,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $readerSemiColon = new Reader(__DIR__ . '/read_sc.csv');
         $readerSemiColon->setDelimiter(';');
+
         return array(
             array(new Reader(__DIR__ . '/read.csv')),
             array($readerSemiColon),
@@ -179,10 +181,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function getReadersNoHeadersFirstRow()
     {
-        $readerSemiColon = new Reader(__DIR__ . '/read_header_line_sc.csv', 'r+', FALSE );
+        $readerSemiColon = new Reader(__DIR__ . '/read_header_line_sc.csv', 'r+', false );
         $readerSemiColon->setDelimiter(';');
+
         return array(
-            array(new Reader(__DIR__ . '/read_header_line.csv', 'r+', FALSE )),
+            array(new Reader(__DIR__ . '/read_header_line.csv', 'r+', false )),
             array($readerSemiColon),
         );
     }
