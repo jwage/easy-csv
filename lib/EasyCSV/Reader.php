@@ -8,10 +8,12 @@ class Reader extends AbstractBase
      * @var bool
      */
     private $headersInFirstRow = true;
+
     /**
      * @var array|bool
      */
     private $headers = false;
+
     /**
      * @var int
      */
@@ -26,6 +28,7 @@ class Reader extends AbstractBase
      * @var bool
      */
     private $headerLine = false;
+    
     /**
      * @var bool
      */
