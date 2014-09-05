@@ -14,7 +14,7 @@ abstract class AbstractBase
             touch($path);
         }
         $this->handle = new \SplFileObject($path, $mode);
-        $this->handle->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD);
+        $this->handle->setFlags(\SplFileObject::DROP_NEW_LINE);
     }
 
     public function __destruct()
