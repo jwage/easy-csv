@@ -8,12 +8,17 @@ abstract class AbstractBase
     protected $delimiter = ',';
     protected $enclosure = '"';
 
-    public function __construct($path, $mode = 'r+')
+    public function __construct($path = '', $mode = 'r+')
     {
-        if ( ! file_exists($path)) {
-            touch($path);
+        if ( empty($path)) {
+            $this->handle = new \SplFileObject('php://memory', 'w'); // 'php://temp/maxmemory:1048576'
         }
-        $this->handle = new \SplFileObject($path, $mode);
+        else {
+            if ( ! file_exists($path)) {
+                touch($path);
+            }
+            $this->handle = new \SplFileObject($path, $mode);
+        }
         $this->handle->setFlags(\SplFileObject::DROP_NEW_LINE);
     }
 
