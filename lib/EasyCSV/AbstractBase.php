@@ -10,7 +10,7 @@ abstract class AbstractBase
 
     public function __construct($path, $mode = 'r+')
     {
-        if ( ! file_exists($path)) {
+        if (! file_exists($path)) {
             touch($path);
         }
         $this->handle = new \SplFileObject($path, $mode);
