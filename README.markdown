@@ -33,6 +33,23 @@ Or you can get everything all at once:
 print_r($reader->getAll());
 ```
 
+If you have a file with the header in a different line:
+
+```php
+// our headers aren't on the first line
+$reader = new \EasyCSV\Reader('read.csv', 'r+', false);
+// zero-based index, so this is line 4
+$reader->setHeaderLine(3);
+```
+
+Advance to a different line:
+
+```
+$reader->advanceTo(6);
+```
+
+More in the Reader unit test.
+
 ## Writer
 
 To write CSV files we need to instantiate the EasyCSV writer class:
