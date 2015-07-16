@@ -10,6 +10,13 @@ EasyCSV is a simple Object Oriented CSV manipulation library for PHP 5.4+
 [![Total Downloads](https://poser.pugx.org/jwage/easy-csv/downloads.png)](https://packagist.org/packages/jwage/easy-csv)
 [![Dependency Status](https://www.versioneye.com/php/jwage:easy-csv/1.0.0/badge.png)](https://www.versioneye.com/php/jwage:easy-csv/1.0.0)
 
+## Installation
+
+Install via [composer](https://getcomposer.org/):
+
+```sh
+composer require jwage/easy-csv
+```
 
 ## Reader
 
