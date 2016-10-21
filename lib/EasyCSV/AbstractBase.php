@@ -8,13 +8,17 @@ abstract class AbstractBase
     protected $delimiter = ',';
     protected $enclosure = '"';
 
-    public function __construct($path, $mode = 'r+')
+    public function __construct($path, $mode = 'r+', $isNeedBOM = false)
     {
         if (! file_exists($path)) {
             touch($path);
         }
         $this->handle = new \SplFileObject($path, $mode);
         $this->handle->setFlags(\SplFileObject::DROP_NEW_LINE);
+
+        if ($isNeedBOM) {
+            $this->handle->fwrite("\xEF\xBB\xBF");
+        }
     }
 
     public function __destruct()

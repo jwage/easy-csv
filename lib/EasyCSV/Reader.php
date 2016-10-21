@@ -30,6 +30,11 @@ class Reader extends AbstractBase
     private $lastLine = false;
 
     /**
+     * @var bool|int
+     */
+    private $isNeedBOMRemove = true;
+
+    /**
      * @param $path
      * @param string $mode
      * @param bool   $headersInFirstRow
@@ -128,7 +133,14 @@ class Reader extends AbstractBase
      */
     public function getCurrentRow()
     {
-        return str_getcsv($this->handle->current(), $this->delimiter, $this->enclosure);
+        $current = $this->handle->current();
+        if ($this->isNeedBOMRemove && mb_strpos($current, "\xEF\xBB\xBF", 0, 'utf-8') === 0) {
+            $this->isNeedBOMRemove = false;
+
+            $current = str_replace("\xEF\xBB\xBF", '', $current);
+        }
+
+        return str_getcsv($current, $this->delimiter, $this->enclosure);
     }
 
     /**
