@@ -35,4 +35,9 @@ abstract class AbstractBase
     {
         $this->enclosure = $enclosure;
     }
+    
+    public function getHandle()
+    {
+        return $this->handle;
+    }
 }
