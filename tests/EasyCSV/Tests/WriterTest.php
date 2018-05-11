@@ -21,6 +21,12 @@ class WriterTest extends TestCase
         $this->assertEquals(18, $this->writer->writeRow('test1, test2, test3'));
     }
 
+    public function testWriteRowOnHeaders()
+    {
+        $writer = new Writer(__DIR__ . '/write.csv', 'r+', false, array('header1', 'header2', 'header3'));
+        $this->assertEquals(18, $writer->writeRow('test1, test2, test3'));
+    }
+
     public function testWriteBOMRow()
     {
         $this->assertEquals(57, $this->writerBOM->writeRow('колонка 1, колонка 2, колонка 3'));
