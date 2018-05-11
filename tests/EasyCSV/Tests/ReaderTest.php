@@ -3,8 +3,9 @@
 namespace EasyCSV\Tests;
 
 use EasyCSV\Reader;
+use PHPUnit\Framework\TestCase;
 
-class ReaderTest extends \PHPUnit_Framework_TestCase
+class ReaderTest extends TestCase
 {
     protected $headers = array("column1", "column2", "column3");
 
@@ -206,11 +207,12 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider getReaders
+     * @dataProvider advanceToLastLineProvider
      */
-    public function testAdvanceToLastLine(Reader $reader)
+    public function testAdvanceToLastLine($expectedRows, Reader $reader)
     {
         $reader->advanceTo(5);
+        $this->assertSame($expectedRows, $reader->getCurrentRow());
     }
 
     /**
@@ -297,6 +299,17 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         return array(
             array(new Reader(__DIR__ . '/read.csv')),
             array($readerSemiColon),
+        );
+    }
+
+    public function advanceToLastLineProvider()
+    {
+        $readerSemiColon = new Reader(__DIR__ . '/read_sc.csv');
+        $readerSemiColon->setDelimiter(';');
+
+        return array(
+            array(array('5column2value', '5column3value', '5column4value'), new Reader(__DIR__ . '/read.csv')),
+            array(array('5column2value', '5column3value', '5column4value'), $readerSemiColon),
         );
     }
 
