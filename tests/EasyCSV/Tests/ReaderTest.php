@@ -1,69 +1,78 @@
 <?php
 
+declare(strict_types=1);
+
 namespace EasyCSV\Tests;
 
 use EasyCSV\Reader;
 use PHPUnit\Framework\TestCase;
+use function count;
+use function is_array;
 
 class ReaderTest extends TestCase
 {
-    protected $headers = array("column1", "column2", "column3");
+    /** @var string[] */
+    protected $headers = ['column1', 'column2', 'column3'];
 
-    protected $expectedRows = array(
+    /** @var string[][] */
+    protected $expectedRows = [
         0 =>
-            array(
+            [
                 'column1' => '1column2value',
                 'column2' => '1column3value',
                 'column3' => '1column4value',
-            ),
+            ],
         1 =>
-            array(
+            [
                 'column1' => '2column2value',
                 'column2' => '2column3value',
                 'column3' => '2column4value',
-            ),
+            ],
         2 =>
-            array(
+            [
                 'column1' => '3column2value',
                 'column2' => '3column3value',
                 'column3' => '3column4value',
-            ),
+            ],
         3 =>
-            array(
+            [
                 'column1' => '4column2value',
                 'column2' => '4column3value',
                 'column3' => '4column4value',
-            ),
+            ],
         4 =>
-            array(
+            [
                 'column1' => '5column2value',
                 'column2' => '5column3value',
                 'column3' => '5column4value',
-            ),
-    );
+            ],
+    ];
 
-    protected $dataRow1 = array(
+    /** @var string[] */
+    protected $dataRow1 = [
         'column1' => '1column2value',
         'column2' => '1column3value',
         'column3' => '1column4value',
-    );
+    ];
 
-    protected $dataRow2 = array(
+    /** @var string[] */
+    protected $dataRow2 = [
         'column1' => '2column2value',
         'column2' => '2column3value',
         'column3' => '2column4value',
-    );
+    ];
 
-    protected $dataRow5 = array(
+    /** @var string[] */
+    protected $dataRow5 = [
         'column1' => '5column2value',
         'column2' => '5column3value',
         'column3' => '5column4value',
-    );
+    ];
 
     /**
      * @dataProvider getReaders
      */
-    public function testOneAtAtime(Reader $reader)
+    public function testOneAtAtime(Reader $reader) : void
     {
         while ($row = $reader->getRow()) {
             $this->assertTrue(is_array($row));
@@ -74,7 +83,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testLastRowIsCorrect(Reader $reader)
+    public function testLastRowIsCorrect(Reader $reader) : void
     {
         $reader->getRow();
         $reader->getRow();
@@ -93,7 +102,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testIsEofReturnsCorrectly(Reader $reader)
+    public function testIsEofReturnsCorrectly(Reader $reader) : void
     {
         $this->assertFalse($reader->isEof());
 
@@ -106,7 +115,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testGetAll(Reader $reader)
+    public function testGetAll(Reader $reader) : void
     {
         $this->assertEquals(5, count($reader->getAll()));
     }
@@ -114,7 +123,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testGetHeaders(Reader $reader)
+    public function testGetHeaders(Reader $reader) : void
     {
         $this->assertEquals($this->headers, $reader->getHeaders());
     }
@@ -122,7 +131,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testAdvanceTo(Reader $reader)
+    public function testAdvanceTo(Reader $reader) : void
     {
         $this->assertEquals(0, $reader->getLineNumber());
 
@@ -145,11 +154,11 @@ class ReaderTest extends TestCase
 
         $reader->advanceTo(3);
 
-        $row = array(
+        $row = [
             'column1' => '3column2value',
             'column2' => '3column3value',
             'column3' => '3column4value',
-        );
+        ];
 
         $this->assertEquals($row, $reader->getRow());
         $this->assertEquals(4, $reader->getLineNumber());
@@ -158,18 +167,18 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testAdvanceToNoHeadersFirstRow(Reader $reader)
+    public function testAdvanceToNoHeadersFirstRow(Reader $reader) : void
     {
-        $firstMetaRow = array(
+        $firstMetaRow  = [
             0 => 'Some Meta Data',
             1 => '',
             2 => '',
-        );
-        $secondMetaRow = array(
-            0 => "Field: Value",
+        ];
+        $secondMetaRow = [
+            0 => 'Field: Value',
             1 => '',
             2 => '',
-        );
+        ];
 
         $actualRow = $reader->getRow();
         $this->assertEquals($firstMetaRow, $actualRow);
@@ -207,9 +216,11 @@ class ReaderTest extends TestCase
     }
 
     /**
+     * @param mixed[] $expectedRows
+     *
      * @dataProvider advanceToLastLineProvider
      */
-    public function testAdvanceToLastLine($expectedRows, Reader $reader)
+    public function testAdvanceToLastLine(array $expectedRows, Reader $reader) : void
     {
         $reader->advanceTo(5);
         $this->assertSame($expectedRows, $reader->getCurrentRow());
@@ -219,7 +230,7 @@ class ReaderTest extends TestCase
      * @dataProvider getReadersNoHeadersFirstRow
      * @expectedException \LogicException
      */
-    public function testAdvanceToBeforeHeaderLineNoHeadersFirstRow(Reader $reader)
+    public function testAdvanceToBeforeHeaderLineNoHeadersFirstRow(Reader $reader) : void
     {
         $reader->setHeaderLine(3);
         $reader->advanceTo(1);
@@ -229,7 +240,7 @@ class ReaderTest extends TestCase
      * @dataProvider getReaders
      * @expectedException \LogicException
      */
-    public function testAdvanceToHeaderLine(Reader $reader)
+    public function testAdvanceToHeaderLine(Reader $reader) : void
     {
         $reader->getRow();
         $reader->advanceTo(0);
@@ -239,7 +250,7 @@ class ReaderTest extends TestCase
      * @dataProvider getReaders
      * @expectedException \LogicException
      */
-    public function testAdvanceToPastEof(Reader $reader)
+    public function testAdvanceToPastEof(Reader $reader) : void
     {
         $reader->advanceTo(999);
     }
@@ -247,7 +258,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testSetHeaderLine(Reader $reader)
+    public function testSetHeaderLine(Reader $reader) : void
     {
         $headers = $this->headers;
 
@@ -261,7 +272,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testSetHeaderLineNoHeadersFirstRow(Reader $reader)
+    public function testSetHeaderLineNoHeadersFirstRow(Reader $reader) : void
     {
         // set headers
         $reader->setHeaderLine(3);
@@ -277,7 +288,7 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReaders
      */
-    public function testGetLastLineNumber(Reader $reader)
+    public function testGetLastLineNumber(Reader $reader) : void
     {
         $this->assertEquals(5, $reader->getLastLineNumber());
         $this->assertEquals(5, $reader->getLastLineNumber());
@@ -286,41 +297,50 @@ class ReaderTest extends TestCase
     /**
      * @dataProvider getReadersNoHeadersFirstRow
      */
-    public function testGetLastLineNumberNoHeadersFirstRow(Reader $reader)
+    public function testGetLastLineNumberNoHeadersFirstRow(Reader $reader) : void
     {
         $this->assertEquals(10, $reader->getLastLineNumber());
     }
 
-    public function getReaders()
+    /**
+     * @return Reader[]
+     */
+    public function getReaders() : array
     {
         $readerSemiColon = new Reader(__DIR__ . '/read_sc.csv');
         $readerSemiColon->setDelimiter(';');
 
-        return array(
-            array(new Reader(__DIR__ . '/read.csv')),
-            array($readerSemiColon),
-        );
+        return [
+            [new Reader(__DIR__ . '/read.csv')],
+            [$readerSemiColon],
+        ];
     }
 
-    public function advanceToLastLineProvider()
+    /**
+     * @return mixed[]
+     */
+    public function advanceToLastLineProvider() : array
     {
         $readerSemiColon = new Reader(__DIR__ . '/read_sc.csv');
         $readerSemiColon->setDelimiter(';');
 
-        return array(
-            array(array('5column2value', '5column3value', '5column4value'), new Reader(__DIR__ . '/read.csv')),
-            array(array('5column2value', '5column3value', '5column4value'), $readerSemiColon),
-        );
+        return [
+            [['5column2value', '5column3value', '5column4value'], new Reader(__DIR__ . '/read.csv')],
+            [['5column2value', '5column3value', '5column4value'], $readerSemiColon],
+        ];
     }
 
-    public function getReadersNoHeadersFirstRow()
+    /**
+     * @return mixed[]
+     */
+    public function getReadersNoHeadersFirstRow() : array
     {
         $readerSemiColon = new Reader(__DIR__ . '/read_header_line_sc.csv', 'r+', false);
         $readerSemiColon->setDelimiter(';');
 
-        return array(
-            array(new Reader(__DIR__ . '/read_header_line.csv', 'r+', false)),
-            array($readerSemiColon),
-        );
+        return [
+            [new Reader(__DIR__ . '/read_header_line.csv', 'r+', false)],
+            [$readerSemiColon],
+        ];
     }
 }

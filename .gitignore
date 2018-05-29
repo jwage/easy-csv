@@ -1,5 +1,4 @@
 # PhpStorm
 /.idea
-
 vendor
-composer.lock
+
