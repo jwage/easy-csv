@@ -7,6 +7,7 @@ namespace EasyCSV;
 use LogicException;
 use function array_combine;
 use function array_filter;
+use function count;
 use function is_array;
 use function mb_strpos;
 use function sprintf;
@@ -72,12 +73,7 @@ class Reader extends AbstractBase
             return ($this->headers !== false && is_array($this->headers)) ? array_combine($this->headers, $row) : $row;
         }
 
-        if ($isEmpty) {
-            // empty row, transparently try the next row
-            return $this->getRow();
-        }
-
-        return false;
+        return (isset($this->headers) && is_array($this->headers)) && (count($this->headers) !== count($row)) ? $this->getRow() : array_combine($this->headers, $row);
     }
 
     public function isEof() : bool

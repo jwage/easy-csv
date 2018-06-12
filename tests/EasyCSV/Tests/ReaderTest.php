@@ -48,6 +48,46 @@ class ReaderTest extends TestCase
             ],
     ];
 
+    /** @var string[][] */
+    protected $expectedNoHeaderRows = [
+        0 =>
+            [
+                'column1' => '1column2value',
+                'column2' => '1column3value',
+                'column3' => '1column4value',
+            ],
+        1 =>
+            [
+                'column1' => '2column2value',
+                'column2' => '2column3value',
+                'column3' => '2column4value',
+            ],
+        2 =>
+            [
+                'column1' => '3column2value',
+                'column2' => '3column3value',
+                'column3' => '3column4value',
+            ],
+        3 =>
+            [
+                'column1' => '',
+                'column2' => '',
+                'column3' => '',
+            ],
+        4 =>
+            [
+                'column1' => '4column2value',
+                'column2' => '4column3value',
+                'column3' => '4column4value',
+            ],
+        5 =>
+            [
+                'column1' => '5column2value',
+                'column2' => '5column3value',
+                'column3' => '5column4value',
+            ],
+    ];
+
     /** @var string[] */
     protected $dataRow1 = [
         'column1' => '1column2value',
@@ -281,8 +321,8 @@ class ReaderTest extends TestCase
 
         $rows = $reader->getAll();
 
-        $this->assertCount(5, $rows);
-        $this->assertEquals($this->expectedRows, $rows);
+        $this->assertCount(6, $rows);
+        $this->assertEquals($this->expectedNoHeaderRows, $rows);
     }
 
     /**
