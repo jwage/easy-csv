@@ -9,6 +9,7 @@ use function array_combine;
 use function array_filter;
 use function count;
 use function is_array;
+use function is_string;
 use function mb_strpos;
 use function sprintf;
 use function str_getcsv;
@@ -52,7 +53,7 @@ class Reader extends AbstractBase
     }
 
     /**
-     * @return string[]|bool
+     * @return mixed[]|bool
      */
     public function getRow()
     {
@@ -73,7 +74,15 @@ class Reader extends AbstractBase
             return ($this->headers !== false && is_array($this->headers)) ? array_combine($this->headers, $row) : $row;
         }
 
-        return (isset($this->headers) && is_array($this->headers)) && (count($this->headers) !== count($row)) ? $this->getRow() : array_combine($this->headers, $row);
+        if ((isset($this->headers) && is_array($this->headers)) && (count($this->headers) !== count($row))) {
+            return $this->getRow();
+        }
+
+        if (is_array($this->headers)) {
+            return array_combine($this->headers, $row);
+        }
+
+        return false;
     }
 
     public function isEof() : bool
@@ -82,7 +91,7 @@ class Reader extends AbstractBase
     }
 
     /**
-     * @return string[][]
+     * @return mixed[]
      */
     public function getAll() : array
     {
@@ -122,6 +131,10 @@ class Reader extends AbstractBase
     public function getCurrentRow() : array
     {
         $current = $this->getHandle()->current();
+
+        if (! is_string($current)) {
+            return [];
+        }
 
         if ($this->isNeedBOMRemove && mb_strpos($current, "\xEF\xBB\xBF", 0, 'utf-8') === 0) {
             $this->isNeedBOMRemove = false;
@@ -173,7 +186,7 @@ class Reader extends AbstractBase
         $this->getHandle()->seek($lineNumber);
 
         // get headers
-        $this->headers = $this->getRow();
+        $this->headers = $this->getHeadersFromRow();
 
         return true;
     }
@@ -194,7 +207,7 @@ class Reader extends AbstractBase
 
         $this->headerLine = 0;
 
-        $this->headers = $this->getRow();
+        $this->headers = $this->getHeadersFromRow();
     }
 
     /**
@@ -217,5 +230,15 @@ class Reader extends AbstractBase
         }
 
         return $isEmpty;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getHeadersFromRow() : array
+    {
+        $row = $this->getRow();
+
+        return is_array($row) ? $row : [];
     }
 }
