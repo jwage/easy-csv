@@ -71,7 +71,7 @@ class Reader extends AbstractBase
         }
 
         if ($isEmpty === false) {
-            return ($this->headers !== false && is_array($this->headers)) ? array_combine($this->headers, $row) : $row;
+            return $this->headers !== false && is_array($this->headers) ? array_combine($this->headers, $row) : $row;
         }
 
         if ((isset($this->headers) && is_array($this->headers)) && (count($this->headers) !== count($row))) {
@@ -220,13 +220,9 @@ class Reader extends AbstractBase
         $isEmpty                = false;
 
         if ($emptyRow) {
-            $isEmpty = true;
-
-            return $isEmpty;
+            return true;
         } elseif ($emptyRowWithDelimiters) {
-            $isEmpty = true;
-
-            return $isEmpty;
+            return true;
         }
 
         return $isEmpty;
