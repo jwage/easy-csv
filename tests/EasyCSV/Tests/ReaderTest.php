@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EasyCSV\Tests;
 
 use EasyCSV\Reader;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use function count;
 use function is_array;
@@ -268,30 +269,33 @@ class ReaderTest extends TestCase
 
     /**
      * @dataProvider getReadersNoHeadersFirstRow
-     * @expectedException \LogicException
      */
     public function testAdvanceToBeforeHeaderLineNoHeadersFirstRow(Reader $reader) : void
     {
+        $this->expectException(LogicException::class);
+
         $reader->setHeaderLine(3);
         $reader->advanceTo(1);
     }
 
     /**
      * @dataProvider getReaders
-     * @expectedException \LogicException
      */
     public function testAdvanceToHeaderLine(Reader $reader) : void
     {
+        $this->expectException(LogicException::class);
+
         $reader->getRow();
         $reader->advanceTo(0);
     }
 
     /**
      * @dataProvider getReaders
-     * @expectedException \LogicException
      */
     public function testAdvanceToPastEof(Reader $reader) : void
     {
+        $this->expectException(LogicException::class);
+
         $reader->advanceTo(999);
     }
 

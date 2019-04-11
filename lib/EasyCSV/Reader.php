@@ -152,7 +152,9 @@ class Reader extends AbstractBase
                 'Line Number %s is before the header line that was set',
                 $lineNumber
             ));
-        } elseif ($this->headerLine === $lineNumber) {
+        }
+
+        if ($this->headerLine === $lineNumber) {
             throw new LogicException(sprintf(
                 'Line Number %s is equal to the header line that was set',
                 $lineNumber
@@ -221,7 +223,9 @@ class Reader extends AbstractBase
 
         if ($emptyRow) {
             return true;
-        } elseif ($emptyRowWithDelimiters) {
+        }
+
+        if ($emptyRowWithDelimiters) {
             return true;
         }
 
