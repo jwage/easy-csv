@@ -1,7 +1,7 @@
 EasyCSV
 =======
 
-EasyCSV is a simple Object Oriented CSV manipulation library for PHP 7.1+
+EasyCSV is a simple Object Oriented CSV manipulation library for PHP 7.2+
 
 [![Build Status](https://secure.travis-ci.org/jwage/easy-csv.png?branch=master)](http://travis-ci.org/jwage/easy-csv)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/jwage/easy-csv/badges/quality-score.png?s=7e0e1d4b5d7f6be61a3cd804dba556a0e4d1141d)](https://scrutinizer-ci.com/g/jwage/easy-csv/)
